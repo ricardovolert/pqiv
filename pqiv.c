@@ -1210,6 +1210,7 @@ gboolean main_window_resize_callback(gpointer user_data) {/*{{{*/
 
 	// Resize if this has not worked before, but accept a slight deviation (might be round-off error)
 	if(main_window_width >= 0 && abs(main_window_width - new_window_width) + abs(main_window_height - new_window_height) > 1) {
+		g_print("Resize callback had to resize: %d x %d is needed, %d x %d is actual\n", new_window_width, new_window_height, main_window_width, main_window_height);
 		gtk_window_resize(main_window, new_window_width, new_window_height);
 	}
 
@@ -1275,6 +1276,7 @@ void main_window_adjust_for_image() {/*{{{*/
 }/*}}}*/
 gboolean image_loaded_handler(gconstpointer node) {/*{{{*/
 	D_LOCK(file_tree);
+	g_print("Loaded handler\n");
 
 	// Remove any old timeouts etc.
 	if(current_image_animation_timeout_id > 0) {
@@ -2628,6 +2630,8 @@ gboolean window_close_callback(GtkWidget *object, gpointer user_data) {/*{{{*/
 	return FALSE;
 }/*}}}*/
 gboolean window_draw_callback(GtkWidget *widget, cairo_t *cr_arg, gpointer user_data) {/*{{{*/
+	g_print("\033[31mDraw callback invoked (fs=%d)\033[0m\n", main_window_in_fullscreen);
+
 	// Draw image
 	int x = 0;
 	int y = 0;
@@ -2953,6 +2957,7 @@ gboolean window_configure_callback(GtkWidget *widget, GdkEventConfigure *event, 
 		 gint height;
 	 };
 	 */
+	g_print("Configure callback: x=%d, y=%d, w=%d, h=%d\n", event->x, event->y, event->width, event->height);
 
 	static gint old_window_x, old_window_y;
 	if(old_window_x != event->x || old_window_y != event->y) {
@@ -2974,6 +2979,8 @@ gboolean window_configure_callback(GtkWidget *widget, GdkEventConfigure *event, 
 	}
 
 	if(main_window_width != event->width || main_window_height != event->height) {
+		g_print(" this is a resize; old size was %d x %d\n", main_window_width, main_window_height);
+
 		// Update window size
 		if(main_window_in_fullscreen) {
 			main_window_width = screen_geometry.width;
