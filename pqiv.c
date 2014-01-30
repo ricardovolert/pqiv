@@ -2630,7 +2630,9 @@ gboolean window_close_callback(GtkWidget *object, gpointer user_data) {/*{{{*/
 	return FALSE;
 }/*}}}*/
 gboolean window_draw_callback(GtkWidget *widget, cairo_t *cr_arg, gpointer user_data) {/*{{{*/
-	g_print("\033[31mDraw callback invoked (fs=%d)\033[0m\n", main_window_in_fullscreen);
+	double x1,x2,y1,y2;
+	cairo_clip_extents(cr_arg, &x1, &y1, &x2, &y2);
+	g_print("\033[31mDraw callback invoked (fs=%d): Clipping area is (x1=%04d,y1=%04d,x2=%04d,y2=%04d)\033[0m\n", main_window_in_fullscreen, (int)x1, (int)y1, (int)x2, (int)y2);
 
 	// Draw image
 	int x = 0;
