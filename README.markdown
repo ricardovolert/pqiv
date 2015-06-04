@@ -122,6 +122,8 @@ pqiv (wip)
  * Added --sort-key=mtime to sort by modification time instead of file name
  * Delay the "Image is still loading" message for half a second to avoid
    flickering status messages
+ * Added --background-gradient to draw gradient backgrounds in fullscreen,
+   instead of the default black one
 
 pqiv 2.3.5
  * Fix parameters in pqivrc that are handled by a callback
