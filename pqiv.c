@@ -1341,6 +1341,7 @@ void main_window_adjust_for_image() {/*{{{*/
 			// Tell the WM to center the window
 			gtk_window_set_position(main_window, GTK_WIN_POS_CENTER_ALWAYS);
 		}
+		gtk_window_set_gravity(main_window, GDK_GRAVITY_CENTER);
 		if(!main_window_visible) {
 			gtk_window_set_default_size(main_window, new_window_width, new_window_height);
 			gtk_window_set_geometry_hints(main_window, NULL, &hints, GDK_HINT_ASPECT);
@@ -3214,6 +3215,7 @@ gboolean window_configure_callback(GtkWidget *widget, GdkEventConfigure *event, 
 		// Window was moved. Reset automatic positioning to allow
 		// user-resizing without pain.
 		gtk_window_set_position(main_window, GTK_WIN_POS_NONE);
+		gtk_window_set_gravity(main_window, GDK_GRAVITY_NORTH_WEST);
 
 		old_window_x = event->x;
 		old_window_y = event->y;
@@ -3946,6 +3948,8 @@ void create_window() { /*{{{*/
 		GDK_EXPOSURE_MASK | GDK_SCROLL_MASK | GDK_BUTTON_MOTION_MASK |
 		GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_KEY_PRESS_MASK |
 		GDK_PROPERTY_CHANGE_MASK | GDK_KEY_RELEASE_MASK | GDK_STRUCTURE_MASK);
+
+	gtk_window_set_gravity(main_window, GDK_GRAVITY_CENTER);
 
 	// Initialize the screen geometry variable to the primary screen
 	// Useful if no WM is present
